@@ -8,37 +8,32 @@ to Cisco SSL-VPNs
 
 ## Installation
 
-### Using pip/pipx
+### Using uv
 
-A generic way that works on most 'standard' Linux distributions out of the box.
-The following example shows how to install `openconect-sso` along with its
-dependencies including Qt:
+The fastest way to install `openconnect-sso` is using [uv](https://docs.astral.sh/uv/), an extremely fast Python package installer written in Rust:
 
 ```shell
-$ pip install --user pipx
-Successfully installed pipx
-$ pipx install "openconnect-sso[full]"
-⣾ installing openconnect-sso
-  installed package openconnect-sso 0.4.0, Python 3.7.5
-  These apps are now globally available
-    - openconnect-sso
-⚠️  Note: '/home/vlaci/.local/bin' is not on your PATH environment variable.
-These apps will not be globally accessible until your PATH is updated. Run
-`pipx ensurepath` to automatically add it, or manually modify your PATH in your
-shell's config file (i.e. ~/.bashrc).
-done! ✨ 🌟 ✨
-Successfully installed openconnect-sso
-$ pipx ensurepath
-Success! Added /home/vlaci/.local/bin to the PATH environment variable.
-Consider adding shell completions for pipx. Run 'pipx completions' for
-instructions.
+# Install uv first (if not already installed)
+$ curl -LsSf https://astral.sh/uv/install.sh | sh
 
-You likely need to open a new terminal or re-login for the changes to take
-effect. ✨ 🌟 ✨
+# Install openconnect-sso globally
+$ uv tool install openconnect-sso
+
+# Or install from the repository directly
+$ uv tool install git+https://github.com/vlaci/openconnect-sso
 ```
 
-Of course you can also install via `pip` instead of `pipx` if you'd like to
-install system-wide or a virtualenv of your choice.
+You can also use uv to create a virtual environment and install locally:
+
+```shell
+# Create a virtual environment and activate it
+$ uv venv
+$ source .venv/bin/activate  # On Linux/macOS
+# or .venv\Scripts\activate  # On Windows
+
+# Install openconnect-sso
+$ uv add openconnect-sso
+```
 
 ### On Arch Linux
 
@@ -52,7 +47,7 @@ yay -S openconnect-sso
 
 ### Windows *(EXPERIMENTAL)*
 
-Install with [pip/pipx](#using-pippipx) and be sure that you have `sudo` and `openconnect`
+Install with [uv](#using-uv) and be sure that you have `sudo` and `openconnect`
 executable commands in your PATH.
 
 ## Usage
@@ -120,6 +115,26 @@ openconnect-sso --server vpn.server.com/group --user user@domain.com -- --base-m
 
 ## Development
 
-You may [get Poetry](https://python-poetry.org/docs/) and
-start developing by using the included `Makefile`. Type `make help` to see the
-possible make targets.
+This project uses [uv](https://docs.astral.sh/uv/) for dependency management. To set up the development environment:
+
+```shell
+# Install uv first (if not already installed)
+$ curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Clone and set up the project
+$ git clone https://github.com/vlaci/openconnect-sso
+$ cd openconnect-sso
+$ uv sync --extra dev
+
+# Activate the virtual environment
+$ source .venv/bin/activate  # On Linux/macOS
+# or .venv\Scripts\activate  # On Windows
+
+# Install pre-commit hooks
+$ pre-commit install
+
+# Run development commands
+$ make help  # See available commands
+```
+
+Alternatively, you can use the included `Makefile` which will use uv automatically.

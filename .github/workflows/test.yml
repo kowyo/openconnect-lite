@@ -40,7 +40,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ steps.pip-cache.outputs.dir }}
-          key: pip-${{ runner.os }}-${{ steps.full-python-version.outputs.version }}-${{ hashFiles('poetry.lock') }}
+          key: pip-${{ runner.os }}-${{ steps.full-python-version.outputs.version }}-${{ hashFiles('uv.lock') }}
           restore-keys: |
             pip-${{ runner.os }}-${{ steps.full-python-version.outputs.version }}-
             pip-${{ runner.os }}-
@@ -50,7 +50,7 @@ jobs:
         id: cache-venv
         with:
           path: .venv
-          key: venv-${{ runner.os }}-${{ steps.full-python-version.outputs.version }}-${{ hashFiles('poetry.lock') }}
+          key: venv-${{ runner.os }}-${{ steps.full-python-version.outputs.version }}-${{ hashFiles('uv.lock') }}
 
       - name: Update make
         if: startsWith(runner.os, 'macOS')
@@ -64,7 +64,10 @@ jobs:
           # For mac
           [[ -f ~/.bash_profile ]] && source ~/.bash_profile
           python -m ensurepip
-          python -m pip install --upgrade pip pre-commit poetry
+          python -m pip install --upgrade pip pre-commit
+          # Install uv
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          echo 'export PATH=$HOME/.local/bin:$PATH' >> ~/.bash_profile
           make PRECOMMIT=n dev
           sudo apt update
           sudo apt install libegl1
