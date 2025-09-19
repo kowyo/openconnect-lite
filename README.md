@@ -99,9 +99,6 @@ $ uv sync --extra dev
 $ source .venv/bin/activate  # On Linux/macOS
 # or .venv\Scripts\activate  # On Windows
 
-# Install pre-commit hooks
-$ pre-commit install
-
 # Run development commands
 $ make help  # See available commands
 ```

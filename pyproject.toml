@@ -43,14 +43,10 @@ openconnect-sso = "openconnect_sso.cli:main"
 dev = [
     "coverage-enable-subprocess>=1.0",
     "pytest>=7.2",
-    "black==22.10",
     "pytest-asyncio>=0.20.1",
     "pytest-cov>=4.0",
     "pytest-httpserver>=1.0",
 ]
-
-[tool.black]
-target-version = ['py36', 'py37', 'py38']
 
 [build-system]
 requires = ["hatchling"]

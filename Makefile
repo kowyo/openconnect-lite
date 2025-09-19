@@ -1,7 +1,5 @@
 CONTINUE_ON_ERROR ?= # should be used only for testing
 
-PRE_COMMIT_HOME=$(dir MAKEFILE_LIST).git/pre-commit
-
 ifeq ($(OS),Windows_NT)
 	PYTHON ?= python
     VENV_BIN := .venv/Scripts
@@ -85,9 +83,6 @@ endif
 
 .PHONY: dev
 dev:  ## Initializes repository for development
-	@if [[ "$(strip $(PRECOMMIT))" =~ ^(true|1|y|yes)$$ ]]; then
-		$(MAKE) pre-commit-install
-	fi
 	@$(echo-stage) "Checking existing if existing .venv exists..."
 	if [[ -f "$(VENV_BIN)/pip" ]] && "$(VENV_BIN)/pip" --version > /dev/null; then
 		$(echo-stage) "Using existing .venv directory..."
@@ -102,11 +97,6 @@ dev:  ## Initializes repository for development
 	uv sync --extra dev $(UVARGS)
 	$(echo-success) "Development installation finished."
 dev: UVARGS ?= ## Additional arguments for uv sync
-dev: PRECOMMIT ?= yes ## Install pre-commit hooks
-
-pre-commit-install:
-	@$(echo-stage) "Setting up pre-commit hooks..."
-	pre-commit install --install-hooks
 
 .PHONY: clean
 clean:  ## Remove temporary files and artifacts
@@ -115,11 +105,7 @@ clean:  ## Remove temporary files and artifacts
 ###############################################################################
 ## QA
 .PHONY: check
-check: pre-commit test  ## Run required tests and coding style checks
-
-.PHONY: pre-commit
-pre-commit: pre-commit-install
-	pre-commit run -a
+check: test  ## Run required tests and coding style checks
 
 .PHONY: test
 test:  ## Run tests
