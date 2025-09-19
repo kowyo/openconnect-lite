@@ -1,4 +1,3 @@
-NIX_QTWRAPPER ?= # Set up environment for locating Qt libraries from Nix
 CONTINUE_ON_ERROR ?= # should be used only for testing
 
 PRE_COMMIT_HOME=$(dir MAKEFILE_LIST).git/pre-commit
@@ -124,7 +123,7 @@ pre-commit: pre-commit-install
 
 .PHONY: test
 test:  ## Run tests
-	$(NIX_QTWRAPPER) $(VENV_BIN)/pytest
+	$(VENV_BIN)/pytest
 
 ###############################################################################
 ## Release
