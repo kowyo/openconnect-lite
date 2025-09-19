@@ -1,5 +1,7 @@
 # openconnect-sso
 
+> This is a fork of [vlaci/openconnect-sso](https://github.com/vlaci/openconnect-sso) maintained by [kowyo](https://github.com/kowyo).
+
 Wrapper script for OpenConnect supporting Azure AD (SAMLv2) authentication
 to Cisco SSL-VPNs
 

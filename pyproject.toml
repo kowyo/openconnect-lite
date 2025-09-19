@@ -1,14 +1,15 @@
 [project]
 name = "openconnect-sso"
-version = "0.8.1"
-description = "Wrapper script for OpenConnect supporting Azure AD (SAMLv2) authentication to Cisco SSL-VPNs"
+version = "0.8.2"
+description = "Wrapper script for OpenConnect supporting Azure AD (SAMLv2) authentication to Cisco SSL-VPNs (Fork)"
 license = {text = "GPL-3.0-only"}
 authors = [
-    {name = "László Vaskó", email = "laszlo.vasko@outlook.com"}
+    {name = "László Vaskó", email = "laszlo.vasko@outlook.com"},
+    {name = "kowyo", email = "kowyo@outlook.com"}
 ]
 readme = "README.md"
-homepage = "https://github.com/vlaci/openconnect-sso"
-repository = "https://github.com/vlaci/openconnect-sso"
+homepage = "https://github.com/kowyo/openconnect-sso"
+repository = "https://github.com/kowyo/openconnect-sso"
 classifiers = [
     "Development Status :: 4 - Beta",
     "Environment :: X11 Applications :: Qt",
