@@ -84,18 +84,15 @@ endif
 .PHONY: dev
 dev:  ## Initializes repository for development
 	@$(echo-stage) "Checking existing if existing .venv exists..."
-	if [[ -f "$(VENV_BIN)/pip" ]] && "$(VENV_BIN)/pip" --version > /dev/null; then
-		$(echo-stage) "Using existing .venv directory..."
-	else
-		$(echo-stage) "Creating virtualenv in .venv..."
-		rm -rf .venv
-		$(PYTHON) -m venv .venv
+	@if [[ -d ".venv" ]]; then \
+		$(echo-stage) "Using existing .venv directory..."; \
+	else \
+		$(echo-stage) "Creating virtualenv in .venv..."; \
 	fi
-	$(echo-stage) "Updating pip in .venv..."
-	$(VENV_BIN)/python -m pip install --upgrade pip
-	$(echo-stage) "Installing openconnect-sso in develop mode..."
-	uv sync --extra dev $(UVARGS)
-	$(echo-success) "Development installation finished."
+	@uv venv --allow-existing --python "$(PYTHON)" .venv
+	@$(echo-stage) "Installing openconnect-sso in develop mode..."
+	@uv sync --group dev $(UVARGS)
+	@$(echo-success) "Development installation finished."
 dev: UVARGS ?= ## Additional arguments for uv sync
 
 .PHONY: clean
