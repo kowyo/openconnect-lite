@@ -3,10 +3,10 @@ import json
 import multiprocessing
 import signal
 import sys
+from importlib import resources
 from urllib.parse import urlparse
 
 import attr
-import pkg_resources
 import structlog
 
 from PyQt6.QtCore import QUrl, QTimer, pyqtSlot, Qt
@@ -158,7 +158,7 @@ class WebBrowser(QWebEngineView):
             return self._popupWindow.view()
 
     def authenticate_at(self, url, credentials):
-        script_source = pkg_resources.resource_string(__name__, "user.js").decode()
+        script_source = resources.read_text(__package__, "user.js", encoding="utf-8")
         script = QWebEngineScript()
         script.setInjectionPoint(QWebEngineScript.InjectionPoint.DocumentCreation)
         script.setWorldId(QWebEngineScript.ScriptWorldId.ApplicationWorld)
