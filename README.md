@@ -5,9 +5,6 @@
 Wrapper script for OpenConnect supporting Azure AD (SAMLv2) authentication
 to Cisco SSL-VPNs
 
-[![Tests Status
-](https://github.com/vlaci/openconnect-sso/workflows/Tests/badge.svg?branch=master&event=push)](https://github.com/vlaci/openconnect-sso/actions?query=workflow%3ATests+branch%3Amaster+event%3Apush)
-
 ## Installation
 
 ### Using uv
@@ -18,39 +15,9 @@ The fastest way to install `openconnect-sso` is using [uv](https://docs.astral.s
 # Install uv first (if not already installed)
 $ curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# Install openconnect-sso globally
-$ uv tool install openconnect-sso
-
-# Or install from the repository directly
-$ uv tool install git+https://github.com/vlaci/openconnect-sso
+# install from the repository directly
+$ uvx install git+https://github.com/kowyo/openconnect-sso
 ```
-
-You can also use uv to create a virtual environment and install locally:
-
-```shell
-# Create a virtual environment and activate it
-$ uv venv
-$ source .venv/bin/activate  # On Linux/macOS
-# or .venv\Scripts\activate  # On Windows
-
-# Install openconnect-sso
-$ uv add openconnect-sso
-```
-
-### On Arch Linux
-
-There is an unofficial package available for Arch Linux on
-[AUR](https://aur.archlinux.org/packages/openconnect-sso/). You can use your
-favorite AUR helper to install it:
-
-``` shell
-yay -S openconnect-sso
-```
-
-### Windows *(EXPERIMENTAL)*
-
-Install with [uv](#using-uv) and be sure that you have `sudo` and `openconnect`
-executable commands in your PATH.
 
 ## Usage
 
