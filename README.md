@@ -93,7 +93,7 @@ $ curl -LsSf https://astral.sh/uv/install.sh | sh
 # Clone and set up the project
 $ git clone https://github.com/vlaci/openconnect-sso
 $ cd openconnect-sso
-$ uv sync --extra dev
+$ uv sync --all-groups
 
 # Activate the virtual environment
 $ source .venv/bin/activate  # On Linux/macOS

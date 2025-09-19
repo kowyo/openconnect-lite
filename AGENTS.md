@@ -6,7 +6,7 @@ openconnect-sso wraps OpenConnect with Azure AD SSO support. Follow these guidel
 The core package lives in `openconnect_sso/`: `cli.py` wires the command-line entry point, authentication flows sit in `authenticator.py` and `saml_authenticator.py`, and `browser/` holds the PyQt WebEngine controller plus the injected `user.js`. Shared configuration helpers reside in `config.py` and `profile.py`, while `version.py` exposes the packaged version string. Tests live in `tests/` alongside common fixtures in `conftest.py`. Repository metadata and automation are defined in `pyproject.toml`, `Makefile`, and the uv-managed virtual environment under `.venv/`.
 
 ## Build, Test, and Development Commands
-- `uv sync --extra dev`: create or refresh the development environment with dev dependencies.
+- `uv sync --all-groups`: create or refresh the development environment with dev dependencies.
 - `make dev`: bootstrap `.venv` and sync dependencies via uv.
 - `uv run pytest` or `make test`: execute the test suite inside the managed virtualenv.
 - `make check`: convenience alias for running the pytest suite in CI-equivalent mode.
