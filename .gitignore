@@ -109,3 +109,5 @@ venv.bak/
 
 # pre-commit
 .pre-commit-cache
+
+.DS_Store
