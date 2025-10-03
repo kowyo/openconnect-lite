@@ -13,10 +13,10 @@ The fastest way to install `openconnect-sso` is using [uv](https://docs.astral.s
 
 ```shell
 # Install uv first (if not already installed)
-$ curl -LsSf https://astral.sh/uv/install.sh | sh
+curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# install from the repository directly
-$ uvx install git+https://github.com/kowyo/openconnect-sso
+# Install the latest version of this fork
+uvx install git+https://github.com/kowyo/openconnect-sso
 ```
 
 ## Usage
@@ -88,19 +88,16 @@ This project uses [uv](https://docs.astral.sh/uv/) for dependency management. To
 
 ```shell
 # Install uv first (if not already installed)
-$ curl -LsSf https://astral.sh/uv/install.sh | sh
+curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # Clone and set up the project
-$ git clone https://github.com/vlaci/openconnect-sso
-$ cd openconnect-sso
-$ uv sync --all-groups
+git clone https://github.com/kowyo/openconnect-sso
+cd openconnect-sso
 
-# Activate the virtual environment
-$ source .venv/bin/activate  # On Linux/macOS
-# or .venv\Scripts\activate  # On Windows
+# Create the virtual environment and install all dependency groups
+make dev
 
-# Run development commands
-$ make help  # See available commands
+# Run development commands without activating the venv manually
+uv run openconnect-sso --help
 ```
 
-Alternatively, you can use the included `Makefile` which will use uv automatically.
