@@ -91,7 +91,7 @@ dev:  ## Initializes repository for development
 	fi
 	@uv venv --allow-existing --python "$(PYTHON)" .venv
 	@$(echo-stage) "Installing openconnect-sso in develop mode..."
-	@uv sync --group dev $(UVARGS)
+	@uv sync --all-groups $(UVARGS)
 	@$(echo-success) "Development installation finished."
 dev: UVARGS ?= ## Additional arguments for uv sync
 
