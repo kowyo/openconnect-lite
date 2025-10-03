@@ -7,16 +7,23 @@ to Cisco SSL-VPNs
 
 ## Installation
 
-### Using uv
+### Install OpenConnect
 
-The fastest way to install `openconnect-sso` is using [uv](https://docs.astral.sh/uv/), an extremely fast Python package installer written in Rust:
+```shell
+sudo apt install openconnect # Debian
+brew install openconnect # macOS
+```
+### Install OpenConnect-SSO
+
+We use [uv](https://docs.astral.sh/uv/) to install the project:
 
 ```shell
 # Install uv first (if not already installed)
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# Install the latest version of this fork
-uvx install git+https://github.com/kowyo/openconnect-sso
+# Clone the latest version of this fork
+git clone https://github.com/kowyo/openconnect-sso
+uv run openconnect-sso --help # test the installation
 ```
 
 ## Usage
