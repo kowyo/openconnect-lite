@@ -1,6 +1,7 @@
 # openconnect-sso
 
-> This is a fork of [vlaci/openconnect-sso](https://github.com/vlaci/openconnect-sso) maintained by [kowyo](https://github.com/kowyo).
+> [!NOTE]
+> This project is a fork of [vlaci/openconnect-sso](https://github.com/vlaci/openconnect-sso) and is still under development. Please open issues or discussions in [kowyo/openconnect-sso](https://github.com/kowyo/openconnect-sso) if you find any issues. Questions and contribution is cordially welcome.
 
 Wrapper script for OpenConnect supporting Azure AD (SAMLv2) authentication
 to Cisco SSL-VPNs
@@ -12,57 +13,91 @@ to Cisco SSL-VPNs
 ```shell
 sudo apt install openconnect # Debian
 brew install openconnect # macOS
+# other systems should be supported, but haven't been tested by me
 ```
-### Install OpenConnect-SSO
 
-We use [uv](https://docs.astral.sh/uv/) to install the project:
+### Install uv
+
+We use [uv](https://docs.astral.sh/uv/) to install this project. If you don't have `uv` installed, you can install it by running:
 
 ```shell
-# Install uv first (if not already installed)
 curl -LsSf https://astral.sh/uv/install.sh | sh
+```
 
+### Option 1: Install from source
+
+```shell
 # Clone the latest version of this fork
 git clone https://github.com/kowyo/openconnect-sso
 uv run openconnect-sso --help # test the installation
+uv run openconnect-sso --server  --user 
+```
+
+### Option 2: Install as a global tool
+
+Alternatively, you can use `uv tool install` or `uvx` to install `openconnect-sso` as a global tool.
+
+```shell
+# install the latest version
+uv tool install git+https://github.com/kowyo/openconnect-sso
+
+# install the latest version and execute `openconnect-sso` directly
+uvx git+https://github.com/kowyo/openconnect-sso
 ```
 
 ## Usage
 
-If you want to save credentials and get them automatically
-injected in the web browser:
-
 ```shell
-$ openconnect-sso --server vpn.server.com/group --user user@domain.com
-Password (user@domain.com):
-[info     ] Authenticating to VPN endpoint ...
+openconnect-sso --server <vpn_server_addr> --user <your_username>
 ```
 
-User credentials are automatically saved to the users login keyring (if
-available).
+## Configuration
 
-If you already have Cisco AnyConnect set-up, then `--server` argument is
-optional. Also, the last used `--server` address is saved between sessions so
-there is no need to always type in the same arguments:
+You can customize the behavior of `openconnect-sso` by creating a configuration file at
+`$XDG_CONFIG_HOME/openconnect-sso/config.toml`
 
-```shell
-$ openconnect-sso
-[info     ] Authenticating to VPN endpoint ...
-```
+```yaml
+on_disconnect = ""
 
-Configuration is saved in `$XDG_CONFIG_HOME/openconnect-sso/config.toml`. On
-typical Linux installations it is located under
-`$HOME/.config/openconnect-sso/config.toml`
+[default_profile]
+server = "<VPN_SERVER_ADDRESS>"
+user_group = ""
+name = ""
 
-For CISCO-VPN and TOTP the following seems to work by tuning the config.toml
-and removing the default "submit"-action to the following:
+[credentials]
+username = "<YOUR_USERNAME>"
 
-```
+[auto_fill_rules]
+[[auto_fill_rules."https://*"]]
+selector = "div[id=passwordError]"
+action = "stop"
+
+[[auto_fill_rules."https://*"]]
+selector = "input[type=email]"
+fill = "username"
+
+[[auto_fill_rules."https://*"]]
+selector = "input[name=Password]"
+fill = "password"
+
 [[auto_fill_rules."https://*"]]
 selector = "input[data-report-event=Signin_Submit]"
 action = "click"
 
 [[auto_fill_rules."https://*"]]
-selector = "input[type=tel]"
+selector = "#submitButton"
+action = "click"
+
+[[auto_fill_rules."https://*"]]
+selector = "div[data-value=PhoneAppOTP]"
+action = "click"
+
+[[auto_fill_rules."https://*"]]
+selector = "a[id=signInAnotherWay]"
+action = "click"
+
+[[auto_fill_rules."https://*"]]
+selector = "input[name=otc]"
 fill = "totp"
 ```
 
@@ -86,7 +121,6 @@ solution of the previous errors is setting `--base-mtu` e.g.:
 
 ```shell
 openconnect-sso --server vpn.server.com/group --user user@domain.com -- --base-mtu=1370
-#                                                          separator ^^|^^^^^^^^^^^^^^^ openconnect args
 ```
 
 ## Development
@@ -107,4 +141,3 @@ make dev
 # Run development commands without activating the venv manually
 uv run openconnect-sso --help
 ```
-
