@@ -16,7 +16,6 @@ class Browser:
         self._urls = asyncio.Queue()
         self.url = None
         self.cookies = {}
-        self.loop = asyncio.get_event_loop()
         self.proxy = proxy
         self.display_mode = display_mode
 
