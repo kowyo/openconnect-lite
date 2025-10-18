@@ -6,9 +6,15 @@
 Wrapper script for OpenConnect supporting Azure AD (SAMLv2) authentication
 to Cisco SSL-VPNs
 
+## Supported Platforms
+
+- [x] Linux
+- [x] macOS
+- [x] Windows
+
 ## Installation
 
-### Install OpenConnect
+1. Install `openconnect` on your system
 
 ```shell
 sudo apt install openconnect # Debian
@@ -16,33 +22,13 @@ brew install openconnect # macOS
 # other systems should be supported, but haven't been tested by me
 ```
 
-### Install uv
+2. Install `openconnect-sso`
 
 We use [uv](https://docs.astral.sh/uv/) to install this project. If you don't have `uv` installed, you can install it by running:
 
 ```shell
 curl -LsSf https://astral.sh/uv/install.sh | sh
-```
-
-### Option 1: Install from source
-
-```shell
-# Clone the latest version of this fork
-git clone https://github.com/kowyo/openconnect-sso
-uv run openconnect-sso --help # test the installation
-uv run openconnect-sso --server  --user 
-```
-
-### Option 2: Install as a global tool
-
-Alternatively, you can use `uv tool install` or `uvx` to install `openconnect-sso` as a global tool.
-
-```shell
-# install the latest version
 uv tool install git+https://github.com/kowyo/openconnect-sso
-
-# install the latest version and execute `openconnect-sso` directly
-uvx git+https://github.com/kowyo/openconnect-sso
 ```
 
 ## Usage
@@ -128,16 +114,11 @@ openconnect-sso --server vpn.server.com/group --user user@domain.com -- --base-m
 This project uses [uv](https://docs.astral.sh/uv/) for dependency management. To set up the development environment:
 
 ```shell
-# Install uv first (if not already installed)
-curl -LsSf https://astral.sh/uv/install.sh | sh
-
 # Clone and set up the project
 git clone https://github.com/kowyo/openconnect-sso
 cd openconnect-sso
 
 # Create the virtual environment and install all dependency groups
 make dev
-
-# Run development commands without activating the venv manually
 uv run openconnect-sso --help
 ```
