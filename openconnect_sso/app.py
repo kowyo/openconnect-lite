@@ -19,6 +19,7 @@ from openconnect_sso.authenticator import Authenticator, AuthResponseError
 from openconnect_sso.browser import Terminated
 from openconnect_sso.config import Credentials
 from openconnect_sso.profile import get_profiles
+from openconnect_sso.windows_helper import check_admin_on_windows
 
 from requests.exceptions import HTTPError
 
@@ -26,6 +27,7 @@ logger = structlog.get_logger()
 
 
 def run(args):
+    check_admin_on_windows()
     configure_logger(logging.getLogger(), args.log_level)
 
     cfg = config.load()
