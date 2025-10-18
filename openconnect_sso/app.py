@@ -189,9 +189,7 @@ def authenticate_to(host, proxy, credentials, display_mode, version):
 
 def run_openconnect(auth_info, host, proxy, version, args):
     if os.name == "nt":
-        command_line = [
-            "powershell.exe",
-            "-Command",
+        openconnect_args = [
             "openconnect",
             "--useragent",
             f"AnyConnect Win {version}",
@@ -203,6 +201,9 @@ def run_openconnect(auth_info, host, proxy, version, args):
             *args,
             host.vpn_url,
         ]
+        if proxy:
+            openconnect_args.extend(["--proxy", proxy])
+        command_line = ["powershell.exe", "-Command", shlex.join(openconnect_args)]
     else:
         as_root = next(([prog] for prog in ("doas", "sudo") if shutil.which(prog)), [])
         try:
@@ -226,8 +227,8 @@ def run_openconnect(auth_info, host, proxy, version, args):
             *args,
             host.vpn_url,
         ]
-    if proxy:
-        command_line.extend(["--proxy", proxy])
+        if proxy:
+            command_line.extend(["--proxy", proxy])
 
     session_token = auth_info.session_token.encode("utf-8")
     logger.debug("Starting OpenConnect", command_line=command_line)
