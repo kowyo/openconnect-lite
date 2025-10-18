@@ -1,5 +1,6 @@
 """Windows-specific helper utilities."""
 
+import ctypes
 import os
 import sys
 
@@ -11,6 +12,8 @@ logger = structlog.get_logger()
 def check_admin_on_windows():
     """Check if the application is running with administrator privileges on Windows.
     
+    Uses ctypes to call the Windows Shell API's IsUserAnAdmin() function.
+    
     Returns:
         bool: True if running on non-Windows systems or as administrator, False otherwise.
     
@@ -21,18 +24,15 @@ def check_admin_on_windows():
         return True
     
     try:
-        from win32com.shell import shell
-        if not shell.IsUserAnAdmin():
+        # Shell32.IsUserAnAdmin returns 1 if user is admin, 0 otherwise
+        is_admin = ctypes.windll.shell32.IsUserAnAdmin()
+        
+        if not is_admin:
             logger.error(
                 "This application requires administrator privileges on Windows. "
                 "Please run the application as Administrator."
             )
             sys.exit(21)
-    except ImportError:
-        logger.warning(
-            "pywin32 is not installed. Cannot verify administrator privileges. "
-            "If you encounter permission errors, please run the application as Administrator."
-        )
     except Exception as e:
         logger.warning(f"Could not verify administrator privileges: {e}")
     
