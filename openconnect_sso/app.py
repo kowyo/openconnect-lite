@@ -188,34 +188,44 @@ def authenticate_to(host, proxy, credentials, display_mode, version):
 
 
 def run_openconnect(auth_info, host, proxy, version, args):
-    as_root = next(([prog] for prog in ("doas", "sudo") if shutil.which(prog)), [])
-    try:
-        if not as_root:
-            if os.name == "nt":
-                import ctypes
-
-                if not ctypes.windll.shell32.IsUserAnAdmin():
-                    raise PermissionError
-            else:
+    if os.name == "nt":
+        command_line = [
+            "powershell.exe",
+            "-Command",
+            "openconnect",
+            "--useragent",
+            f"AnyConnect Win {version}",
+            "--version-string",
+            version,
+            "--cookie-on-stdin",
+            "--servercert",
+            auth_info.server_cert_hash,
+            *args,
+            host.vpn_url,
+        ]
+    else:
+        as_root = next(([prog] for prog in ("doas", "sudo") if shutil.which(prog)), [])
+        try:
+            if not as_root:
                 raise PermissionError
-    except PermissionError:
-        logger.error(
-            "Cannot find suitable program to execute as superuser (doas/sudo), exiting"
-        )
-        return 20
+        except PermissionError:
+            logger.error(
+                "Cannot find suitable program to execute as superuser (doas/sudo), exiting"
+            )
+            return 20
 
-    command_line = as_root + [
-        "openconnect",
-        "--useragent",
-        f"AnyConnect Linux_64 {version}",
-        "--version-string",
-        version,
-        "--cookie-on-stdin",
-        "--servercert",
-        auth_info.server_cert_hash,
-        *args,
-        host.vpn_url,
-    ]
+        command_line = as_root + [
+            "openconnect",
+            "--useragent",
+            f"AnyConnect Linux_64 {version}",
+            "--version-string",
+            version,
+            "--cookie-on-stdin",
+            "--servercert",
+            auth_info.server_cert_hash,
+            *args,
+            host.vpn_url,
+        ]
     if proxy:
         command_line.extend(["--proxy", proxy])
 
