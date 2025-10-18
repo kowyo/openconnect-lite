@@ -1,5 +1,4 @@
-import os
-import subprocess
+import shlex
 from unittest.mock import MagicMock, patch
 
 from openconnect_sso.app import run_openconnect
@@ -7,10 +6,8 @@ from openconnect_sso.config import HostProfile
 
 
 @patch("subprocess.run")
-@patch("shutil.which")
 @patch("os.name", "nt")
-def test_run_openconnect_windows(mock_which, mock_run):
-    mock_which.return_value = None
+def test_run_openconnect_windows(mock_run):
     auth_info = MagicMock()
     auth_info.session_token = "session_token"
     auth_info.server_cert_hash = "server_cert_hash"
@@ -21,9 +18,7 @@ def test_run_openconnect_windows(mock_which, mock_run):
 
     run_openconnect(auth_info, host, proxy, version, args)
 
-    expected_command = [
-        "powershell.exe",
-        "-Command",
+    openconnect_args = [
         "openconnect",
         "--useragent",
         f"AnyConnect Win {version}",
@@ -35,4 +30,5 @@ def test_run_openconnect_windows(mock_which, mock_run):
         *args,
         host.vpn_url,
     ]
+    expected_command = ["powershell.exe", "-Command", shlex.join(openconnect_args)]
     mock_run.assert_called_once_with(expected_command, input=b"session_token")
