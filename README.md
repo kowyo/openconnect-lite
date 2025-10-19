@@ -19,7 +19,8 @@ to Cisco SSL-VPNs
 ```shell
 sudo apt install openconnect # Debian
 brew install openconnect # macOS
-# other systems should be supported, but haven't been tested by me
+scoop install main/openconnect # Windows
+# For other platforms, see https://www.infradead.org/openconnect/download.html
 ```
 
 2. Install `openconnect-sso`
@@ -28,6 +29,11 @@ We use [uv](https://docs.astral.sh/uv/) to install this project. If you don't ha
 
 ```shell
 curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+Then, we can run following command to install `openconnect-sso`
+
+```shell
 uv tool install git+https://github.com/kowyo/openconnect-sso
 ```
 
