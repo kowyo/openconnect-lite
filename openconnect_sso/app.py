@@ -191,6 +191,7 @@ def run_openconnect(auth_info, host, proxy, version, args):
         if not ctypes.windll.shell32.IsUserAnAdmin():
             logger.error("OpenConnect must be run as Administrator on Windows, exiting")
             return 20
+        superuser_cmd = None
     else:
         superuser_cmd = next(
             (prog for prog in ("doas", "sudo") if shutil.which(prog)), None
@@ -201,39 +202,31 @@ def run_openconnect(auth_info, host, proxy, version, args):
             )
             return 20
 
-    if os.name == "nt":
-        openconnect_args = [
-            "openconnect",
-            "--useragent",
-            f"AnyConnect Win {version}",
-            "--version-string",
-            version,
-            "--cookie-on-stdin",
-            "--servercert",
-            auth_info.server_cert_hash,
-            *args,
-            host.vpn_url,
-        ]
-        if proxy:
-            openconnect_args.extend(["--proxy", proxy])
-        command_line = ["powershell.exe", "-Command", shlex.join(openconnect_args)]
+    user_agent = (
+        f"AnyConnect Win {version}"
+        if os.name == "nt"
+        else f"AnyConnect Linux_64 {version}"
+    )
+    openconnect_args = [
+        "openconnect",
+        "--useragent",
+        user_agent,
+        "--version-string",
+        version,
+        "--cookie-on-stdin",
+        "--servercert",
+        auth_info.server_cert_hash,
+        *args,
+        host.vpn_url,
+    ]
+    if proxy:
+        openconnect_args.extend(["--proxy", proxy])
 
+    if os.name == "nt":
+        command_line = ["powershell.exe", "-Command", shlex.join(openconnect_args)]
     else:
-        command_line = [
-            superuser_cmd,
-            "openconnect",
-            "--useragent",
-            f"AnyConnect Linux_64 {version}",
-            "--version-string",
-            version,
-            "--cookie-on-stdin",
-            "--servercert",
-            auth_info.server_cert_hash,
-            *args,
-            host.vpn_url,
-        ]
-        if proxy:
-            command_line.extend(["--proxy", proxy])
+        # Prepend privilege escalation tool to run openconnect with elevated rights.
+        command_line = [superuser_cmd, *openconnect_args]
 
     session_token = auth_info.session_token.encode("utf-8")
     logger.debug("Starting OpenConnect", command_line=command_line)
