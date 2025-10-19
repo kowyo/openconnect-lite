@@ -45,8 +45,8 @@ openconnect-sso --server <vpn_server_addr> --user <your_username>
 
 ## Configuration
 
-You can customize the behavior of `openconnect-sso` by creating a configuration file at
-`$XDG_CACHE_HOME/.config/openconnect-sso/config.toml` or `$HOME/.config/openconnect-sso/config.toml` on Unix and `%LOCALAPPDATA%\.config\openconnect-sso\config.toml` on Windows
+You can customize the behavior of `openconnect-sso` by creating a configuration file at `$HOME/.config/openconnect-sso/config.toml` on Unix 
+and `%LOCALAPPDATA%\.config\openconnect-sso\config.toml` on Windows
 
 ```yaml
 on_disconnect = ""
