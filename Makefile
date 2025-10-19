@@ -1,7 +1,6 @@
 SHELL := /bin/sh
 .DEFAULT_GOAL := help
 
-UV := uv
 ARGS ?=
 
 .PHONY: help install dev test lint format check build clean run lock
@@ -20,32 +19,30 @@ help:
 	@printf "  clean   Remove build caches\n"
 
 install:
-	$(UV) sync
+	uv sync
 
 dev:
-	$(UV) sync --group dev --group lint
+	uv sync --group dev --group lint
 
 test:
-	$(UV) run pytest $(ARGS)
+	uv run pytest $(ARGS)
 
 lint:
-	$(UV) run ruff check . $(ARGS)
+	uv run ruff check . $(ARGS)
 
 format:
-	$(UV) run ruff format . $(ARGS)
+	uv run ruff format . $(ARGS)
 
-check:
-	$(MAKE) lint
-	$(MAKE) test
+check: lint test
 
 build:
-	$(UV) build
+	uv build
 
 run:
-	$(UV) run openconnect-sso $(ARGS)
+	uv run openconnect-sso $(ARGS)
 
 lock:
-	$(UV) lock
+	uv lock
 
 clean:
 	rm -rf build dist htmlcov .pytest_cache .ruff_cache .coverage coverage.xml
