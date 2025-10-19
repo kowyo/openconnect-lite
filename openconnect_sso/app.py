@@ -1,5 +1,4 @@
 import asyncio
-import inspect
 import getpass
 import json
 import logging
@@ -19,7 +18,6 @@ from openconnect_sso.authenticator import Authenticator, AuthResponseError
 from openconnect_sso.browser import Terminated
 from openconnect_sso.config import Credentials
 from openconnect_sso.profile import get_profiles
-from openconnect_sso.windows_helper import check_admin_on_windows
 
 from requests.exceptions import HTTPError
 
@@ -27,20 +25,17 @@ logger = structlog.get_logger()
 
 
 def run(args):
-    check_admin_on_windows()
     configure_logger(logging.getLogger(), args.log_level)
 
     cfg = config.load()
 
     try:
-        run_kwargs = {}
-        proactor_factory = getattr(asyncio, "ProactorEventLoop", None)
-        if (
-            proactor_factory is not None
-            and "loop_factory" in inspect.signature(asyncio.run).parameters
-        ):
-            run_kwargs["loop_factory"] = proactor_factory
-        auth_response, selected_profile = asyncio.run(_run(args, cfg), **run_kwargs)
+        if os.name == "nt":
+            auth_response, selected_profile = asyncio.run(
+                _run(args, cfg), loop_factory=asyncio.ProactorEventLoop
+            )
+        else:
+            auth_response, selected_profile = asyncio.run(_run(args, cfg))
     except KeyboardInterrupt:
         logger.warn("CTRL-C pressed, exiting")
         return 130
@@ -191,6 +186,19 @@ def authenticate_to(host, proxy, credentials, display_mode, version):
 
 def run_openconnect(auth_info, host, proxy, version, args):
     if os.name == "nt":
+        import ctypes
+        if not ctypes.windll.shell32.IsUserAnAdmin():
+            logger.error("OpenConnect must be run as Administrator on Windows, exiting")
+            return 20
+    else:
+        superuser_cmd = next((prog for prog in ("doas", "sudo") if shutil.which(prog)), None)
+        if not superuser_cmd:
+            logger.error(
+                "Cannot find suitable program to execute as superuser (doas/sudo), exiting"
+            )
+            return 20
+    
+    if os.name == "nt":
         openconnect_args = [
             "openconnect",
             "--useragent",
@@ -206,18 +214,10 @@ def run_openconnect(auth_info, host, proxy, version, args):
         if proxy:
             openconnect_args.extend(["--proxy", proxy])
         command_line = ["powershell.exe", "-Command", shlex.join(openconnect_args)]
+    
     else:
-        as_root = next(([prog] for prog in ("doas", "sudo") if shutil.which(prog)), [])
-        try:
-            if not as_root:
-                raise PermissionError
-        except PermissionError:
-            logger.error(
-                "Cannot find suitable program to execute as superuser (doas/sudo), exiting"
-            )
-            return 20
-
-        command_line = as_root + [
+        command_line = [
+            superuser_cmd,
             "openconnect",
             "--useragent",
             f"AnyConnect Linux_64 {version}",
