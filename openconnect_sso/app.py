@@ -187,17 +187,20 @@ def authenticate_to(host, proxy, credentials, display_mode, version):
 def run_openconnect(auth_info, host, proxy, version, args):
     if os.name == "nt":
         import ctypes
+
         if not ctypes.windll.shell32.IsUserAnAdmin():
             logger.error("OpenConnect must be run as Administrator on Windows, exiting")
             return 20
     else:
-        superuser_cmd = next((prog for prog in ("doas", "sudo") if shutil.which(prog)), None)
+        superuser_cmd = next(
+            (prog for prog in ("doas", "sudo") if shutil.which(prog)), None
+        )
         if not superuser_cmd:
             logger.error(
                 "Cannot find suitable program to execute as superuser (doas/sudo), exiting"
             )
             return 20
-    
+
     if os.name == "nt":
         openconnect_args = [
             "openconnect",
@@ -214,7 +217,7 @@ def run_openconnect(auth_info, host, proxy, version, args):
         if proxy:
             openconnect_args.extend(["--proxy", proxy])
         command_line = ["powershell.exe", "-Command", shlex.join(openconnect_args)]
-    
+
     else:
         command_line = [
             superuser_cmd,
