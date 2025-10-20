@@ -1,3 +1,7 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [project]
 name = "openconnect-sso"
 version = "0.8.4"
@@ -26,12 +30,10 @@ dependencies = [
     "toml>=0.10.2",
 ]
 
-[project.scripts]
-openconnect-sso = "openconnect_sso.cli:main"
-
 [dependency-groups]
 dev = [
     "coverage-enable-subprocess>=1.0",
+    "pre-commit>=4.3.0",
     "pytest>=8.4.2",
     "pytest-asyncio>=1.2.0",
     "pytest-cov>=7.0.0",
@@ -41,6 +43,10 @@ lint = [
     "ruff>=0.13.1",
 ]
 
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+[project.urls]
+Homepage = "https://github.com/kowyo/openconnect-sso"
+Documentation = "https://github.com/kowyo/openconnect-sso#readme"
+Repository = "https://github.com/kowyo/openconnect-sso.git"
+
+[project.scripts]
+openconnect-sso = "openconnect_sso.cli:main"
