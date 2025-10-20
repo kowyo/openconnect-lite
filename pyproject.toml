@@ -5,11 +5,14 @@ build-backend = "hatchling.build"
 [project]
 name = "openconnect-lite"
 version = "0.8.5"
-description = "Wrapper script for OpenConnect supporting Azure AD (SAMLv2) authentication to Cisco SSL-VPNs (Fork)"
-license = {text = "GPL-3.0-only"}
+description = "OpenConnect supporting Two-factor authentication (2FA) to Cisco SSL-VPNs"
+license = "GPL-3.0-only"
 authors = [
-    {name = "László Vaskó", email = "laszlo.vasko@outlook.com"},
-    {name = "kowyo", email = "kowyo@outlook.com"}
+    {name = "Kowyo", email = "kowyo@outlook.com"},
+    {name = "László Vaskó", email = "laszlo.vasko@outlook.com"}
+]
+maintainers = [
+    {name = "Kowyo", email = "kowyo@outlook.com"}
 ]
 readme = "README.md"
 requires-python = ">=3.14"
