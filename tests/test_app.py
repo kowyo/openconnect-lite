@@ -1,8 +1,8 @@
 import shlex
 from unittest.mock import MagicMock, patch
 
-from openconnect_sso.app import run_openconnect
-from openconnect_sso.config import HostProfile
+from openconnect_lite.app import run_openconnect
+from openconnect_lite.config import HostProfile
 
 
 @patch("subprocess.run")

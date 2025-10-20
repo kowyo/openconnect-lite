@@ -1,7 +1,7 @@
-# openconnect-sso
+# openconnect-lite
 
 > [!NOTE]
-> This project is a fork of [vlaci/openconnect-sso](https://github.com/vlaci/openconnect-sso) and is under development. Please report issues or start discussions in [kowyo/openconnect-sso](https://github.com/kowyo/openconnect-sso). Contributions are welcome.
+> This project is a fork of [vlaci/openconnect-sso](https://github.com/vlaci/openconnect-sso) and is under development. Please report issues or start discussions in [kowyo/openconnect-lite](https://github.com/kowyo/openconnect-lite). Contributions are welcome.
 
 Wrapper script for OpenConnect supporting Azure AD (SAMLv2) authentication
 to Cisco SSL-VPNs
@@ -23,7 +23,7 @@ scoop install main/openconnect # Windows
 # For other platforms, see https://www.infradead.org/openconnect/download.html
 ```
 
-2. Install `openconnect-sso`
+2. Install `openconnect-lite`
 
 We use [uv](https://docs.astral.sh/uv/) to install this project. If you don't have `uv` installed, you can install it by running:
 
@@ -31,22 +31,22 @@ We use [uv](https://docs.astral.sh/uv/) to install this project. If you don't ha
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-Then, we can run following command to install `openconnect-sso`
+Then, we can run following command to install `openconnect-lite`
 
 ```shell
-uv tool install git+https://github.com/kowyo/openconnect-sso
+uv tool install git+https://github.com/kowyo/openconnect-lite
 ```
 
 ## Usage
 
 ```shell
-openconnect-sso --server <vpn_server_addr> --user <your_username>
+openconnect-lite --server <vpn_server_addr> --user <your_username>
 ```
 
 ## Configuration
 
-You can customize the behavior of `openconnect-sso` by creating a configuration file at `$HOME/.config/openconnect-sso/config.toml` on Unix 
-and `%LOCALAPPDATA%\.config\openconnect-sso\config.toml` on Windows
+You can customize the behavior of `openconnect-lite` by creating a configuration file at `$HOME/.config/openconnect-lite/config.toml` on Unix 
+and `%LOCALAPPDATA%\.config\openconnect-lite\config.toml` on Windows
 
 ```yaml
 on_disconnect = ""
@@ -112,7 +112,7 @@ Generally, you can add `openconnect` arguments after the `--` separator. This is
 solution of the previous errors is setting `--base-mtu` e.g.:
 
 ```shell
-openconnect-sso --server vpn.server.com/group --user user@domain.com -- --base-mtu=1370
+openconnect-lite --server vpn.server.com/group --user user@domain.com -- --base-mtu=1370
 ```
 
 ## Development
@@ -121,10 +121,10 @@ This project uses [uv](https://docs.astral.sh/uv/) for dependency management. To
 
 ```shell
 # Clone and set up the project
-git clone https://github.com/kowyo/openconnect-sso
-cd openconnect-sso
+git clone https://github.com/kowyo/openconnect-lite
+cd openconnect-lite
 
 # Create the virtual environment and install all dependency groups
 make dev
-uv run openconnect-sso --help
+uv run openconnect-lite --help
 ```

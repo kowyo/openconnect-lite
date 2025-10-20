@@ -3,7 +3,7 @@ import requests
 import structlog
 from lxml import etree, objectify
 
-from openconnect_sso.saml_authenticator import authenticate_in_browser
+from openconnect_lite.saml_authenticator import authenticate_in_browser
 
 
 logger = structlog.get_logger()

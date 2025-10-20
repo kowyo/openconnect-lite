@@ -369,8 +369,8 @@ wheels = [
 ]
 
 [[package]]
-name = "openconnect-sso"
-version = "0.8.4"
+name = "openconnect-lite"
+version = "0.8.5"
 source = { editable = "." }
 dependencies = [
     { name = "attrs" },

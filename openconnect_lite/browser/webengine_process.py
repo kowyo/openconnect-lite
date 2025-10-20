@@ -15,7 +15,7 @@ from PyQt6.QtWebEngineCore import QWebEngineScript, QWebEngineProfile, QWebEngin
 from PyQt6.QtWebEngineWidgets import QWebEngineView
 from PyQt6.QtWidgets import QApplication, QWidget, QSizePolicy, QVBoxLayout
 
-from openconnect_sso import config
+from openconnect_lite import config
 
 
 app = None
@@ -80,7 +80,7 @@ class Process(multiprocessing.Process):
         if self.display_mode == config.DisplayMode.HIDDEN:
             argv += ["-platform", "minimal"]
         app = QApplication(argv)
-        profile = QWebEngineProfile("openconnect-sso")
+        profile = QWebEngineProfile("openconnect-lite")
 
         if self.proxy:
             parsed = urlparse(self.proxy)

@@ -1,6 +1,6 @@
 import structlog
 
-from openconnect_sso.browser import Browser
+from openconnect_lite.browser import Browser
 
 log = structlog.get_logger()
 

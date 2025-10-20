@@ -3,8 +3,8 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "openconnect-sso"
-version = "0.8.4"
+name = "openconnect-lite"
+version = "0.8.5"
 description = "Wrapper script for OpenConnect supporting Azure AD (SAMLv2) authentication to Cisco SSL-VPNs (Fork)"
 license = {text = "GPL-3.0-only"}
 authors = [
@@ -44,9 +44,9 @@ lint = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/kowyo/openconnect-sso"
-Documentation = "https://github.com/kowyo/openconnect-sso#readme"
-Repository = "https://github.com/kowyo/openconnect-sso.git"
+Homepage = "https://github.com/kowyo/openconnect-lite"
+Documentation = "https://github.com/kowyo/openconnect-lite#readme"
+Repository = "https://github.com/kowyo/openconnect-lite.git"
 
 [project.scripts]
-openconnect-sso = "openconnect_sso.cli:main"
+openconnect-lite = "openconnect_lite.cli:main"

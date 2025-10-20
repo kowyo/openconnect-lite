@@ -12,7 +12,7 @@ import xdg.BaseDirectory
 
 logger = structlog.get_logger()
 
-APP_NAME = "openconnect-sso"
+APP_NAME = "openconnect-lite"
 
 
 def load():

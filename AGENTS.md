@@ -1,6 +1,6 @@
 # Project Instructions
 
-openconnect-sso wraps OpenConnect with Azure AD SSO support. Follow these guidelines to keep contributions consistent, reviewable, and safe for downstream users.
+openconnect-lite wraps OpenConnect with Azure AD SSO support. Follow these guidelines to keep contributions consistent, reviewable, and safe for downstream users.
 
 ## Dev environment tips
 

@@ -2,7 +2,7 @@ import attr
 import pytest
 import sys
 
-from openconnect_sso.browser import Browser, DisplayMode
+from openconnect_lite.browser import Browser, DisplayMode
 
 
 @pytest.mark.asyncio
@@ -13,7 +13,7 @@ async def test_browser_context_manager_should_work_in_empty_context_manager():
 
 @pytest.mark.xfail(
     sys.platform in ["darwin", "win32"],
-    reason="https://github.com/vlaci/openconnect-sso/issues/23",
+    reason="https://github.com/vlaci/openconnect-lite/issues/23",
 )
 @pytest.mark.asyncio
 async def test_browser_reports_loaded_url(httpserver):
@@ -29,7 +29,7 @@ async def test_browser_reports_loaded_url(httpserver):
 
 @pytest.mark.xfail(
     sys.platform in ["darwin", "win32"],
-    reason="https://github.com/vlaci/openconnect-sso/issues/23",
+    reason="https://github.com/vlaci/openconnect-lite/issues/23",
 )
 @pytest.mark.asyncio
 async def test_browser_cookies_accessible(httpserver):

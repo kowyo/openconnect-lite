@@ -3,4 +3,4 @@ branch = True
 parallel = True
 
 source =
-    openconnect_sso
+    openconnect_lite

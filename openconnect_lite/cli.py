@@ -6,13 +6,13 @@ import logging
 import os
 import sys
 
-import openconnect_sso
-from openconnect_sso import app, config, __version__
+import openconnect_lite
+from openconnect_lite import app, config, __version__
 
 
 def create_argparser():
     parser = argparse.ArgumentParser(
-        prog="openconnect-sso", description=openconnect_sso.__description__
+        prog="openconnect-lite", description=openconnect_lite.__description__
     )
 
     server_settings = parser.add_argument_group("Server connection")

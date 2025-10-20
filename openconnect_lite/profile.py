@@ -3,7 +3,7 @@ from pathlib import Path
 import structlog
 from lxml import objectify
 
-from openconnect_sso.config import HostProfile
+from openconnect_lite.config import HostProfile
 
 logger = structlog.get_logger()
 

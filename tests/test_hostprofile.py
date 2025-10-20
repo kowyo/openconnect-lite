@@ -1,6 +1,6 @@
 import pytest
 
-from openconnect_sso.config import HostProfile
+from openconnect_lite.config import HostProfile
 
 
 @pytest.mark.parametrize(

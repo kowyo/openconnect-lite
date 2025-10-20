@@ -13,11 +13,11 @@ import structlog
 from prompt_toolkit import HTML
 from prompt_toolkit.shortcuts import radiolist_dialog
 
-from openconnect_sso import config
-from openconnect_sso.authenticator import Authenticator, AuthResponseError
-from openconnect_sso.browser import Terminated
-from openconnect_sso.config import Credentials
-from openconnect_sso.profile import get_profiles
+from openconnect_lite import config
+from openconnect_lite.authenticator import Authenticator, AuthResponseError
+from openconnect_lite.browser import Terminated
+from openconnect_lite.config import Credentials
+from openconnect_lite.profile import get_profiles
 
 from requests.exceptions import HTTPError
 
