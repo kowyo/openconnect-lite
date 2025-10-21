@@ -34,7 +34,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 Then, we can run following command to install `openconnect-lite`
 
 ```shell
-uv tool install git+https://github.com/kowyo/openconnect-lite
+uv tool install openconnect-lite
 ```
 
 ## Usage
