@@ -154,6 +154,9 @@ async def _run(args, cfg):
         selected_profile, args.proxy, credentials, display_mode, args.ac_version
     )
 
+    if credentials:
+        credentials.save()
+
     if args.on_disconnect and not cfg.on_disconnect:
         cfg.on_disconnect = args.on_disconnect
 
