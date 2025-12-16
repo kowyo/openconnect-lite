@@ -56,7 +56,7 @@ class ConfigNode:
         return cls(**d)
 
     def as_dict(self):
-        return attr.asdict(self)
+        return attr.asdict(self, filter=lambda a, v: a.init)
 
 
 @attr.s
