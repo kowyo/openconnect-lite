@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "openconnect-lite"
-version = "0.8.5"
+version = "0.8.7"
 description = "OpenConnect supporting Two-factor authentication (2FA) to Cisco SSL-VPNs"
 license = "GPL-3.0-only"
 authors = [
