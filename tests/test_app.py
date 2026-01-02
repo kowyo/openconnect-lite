@@ -7,7 +7,9 @@ from openconnect_lite.config import HostProfile
 
 @patch("subprocess.run")
 @patch("os.name", "nt")
-def test_run_openconnect_windows(mock_run):
+@patch("ctypes.windll", create=True)
+def test_run_openconnect_windows(mock_windll, mock_run):
+    mock_windll.shell32.IsUserAnAdmin.return_value = True
     auth_info = MagicMock()
     auth_info.session_token = "session_token"
     auth_info.server_cert_hash = "server_cert_hash"
