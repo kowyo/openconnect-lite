@@ -144,9 +144,13 @@ def parse_response(resp):
 
 
 def parse_auth_request_response(xml):
-    assert xml.auth.get("id") == "main"
-
     try:
+        if not hasattr(xml, "auth"):
+            xml_content = etree.tostring(xml, encoding="unicode")
+            raise AuthResponseError(f"Missing 'auth' element in response: {xml_content}")
+
+        assert xml.auth.get("id") == "main"
+
         resp = AuthRequestResponse(
             auth_id=xml.auth.get("id"),
             auth_title=getattr(xml.auth, "title", ""),
@@ -157,7 +161,7 @@ def parse_auth_request_response(xml):
             login_final_url=xml.auth["sso-v2-login-final"],
             token_cookie_name=xml.auth["sso-v2-token-cookie-name"],
         )
-    except AttributeError as exc:
+    except (AttributeError, AssertionError) as exc:
         raise AuthResponseError(exc)
 
     logger.info(
