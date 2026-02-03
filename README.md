@@ -1,10 +1,10 @@
 # openconnect-lite
 
-> [!NOTE]
-> This project is a fork of [vlaci/openconnect-sso](https://github.com/vlaci/openconnect-sso) and is under development. Please report issues or start discussions in [kowyo/openconnect-lite](https://github.com/kowyo/openconnect-lite). Contributions are welcome.
-
-Wrapper script for OpenConnect supporting Azure AD (SAMLv2) authentication
-to Cisco SSL-VPNs
+> [!IMPORTANT]
+> This project is a fork of [vlaci/openconnect-sso](https://github.com/vlaci/openconnect-sso). The idea is to fix the deprecated warnings and provide a better developer experience.
+>
+> I myself is not familiar with how OpenConnect, openconnect-sso actually works.
+> So some issues may not be fixed. You are welcome to create your forks.
 
 ## Supported Platforms
 
